@@ -10,12 +10,15 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
+      
+      - name: Create Gradle Wrapper
+        run: gradle wrapper # To stworzy brakujące pliki za nas
+        
       - name: Build APK
-        run: bash ./gradlew assembleDebug || (wget https://raw.githubusercontent.com/gradle/gradle/master/gradlew && chmod +x gradlew && ./gradlew assembleDebug)
+        run: ./gradlew assembleDebug
+
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: MojaApkaDlaFilipa
+          name: BrawlPassApp
           path: app/build/outputs/apk/debug/app-debug.apk
