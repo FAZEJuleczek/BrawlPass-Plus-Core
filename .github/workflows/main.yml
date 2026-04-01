@@ -1,8 +1,11 @@
 name: Build APK
 on: [push]
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true # To naprawia błąd z Node.js 20
     steps:
       - uses: actions/checkout@v4
       
@@ -13,13 +16,15 @@ jobs:
           distribution: 'temurin'
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
+        uses: gradle/actions/setup-gradle@v4 # Nowsza wersja v4
+        with:
+          cache-disabled: true # Wyłączamy cache, bo serwery GitHuba leżą
 
       - name: Build APK
         run: |
-          if [ ! -f gradlew ]; then gradle wrapper; fi
+          if [ ! -f gradlew ]; then gradle wrapper --gradle-version 8.1.1; fi
           chmod +x gradlew
-          ./gradlew assembleDebug
+          ./gradlew assembleDebug --no-daemon
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
