@@ -5,7 +5,6 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:8.1.1'
-        // Dodaj to, żeby Firebase działało:
         classpath 'com.google.gms:google-services:4.3.15'
     }
 }
@@ -15,4 +14,8 @@ allprojects {
         google()
         mavenCentral()
     }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }
