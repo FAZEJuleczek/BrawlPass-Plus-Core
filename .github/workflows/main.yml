@@ -7,17 +7,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Sprawdzanie struktury plików (DIAGNOSTYKA)
-        run: ls -R
-
       - name: set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Build APK
+      - name: Naprawa i Budowanie
         run: |
+          # Wymuszamy stworzenie brakujących elementów
+          if [ ! -f settings.gradle ]; then echo "include ':app'" > settings.gradle; fi
           gradle wrapper --gradle-version 8.1.1
           chmod +x gradlew
-          ./gradlew assembleDebug --stacktrace
+          # Budujemy, ignorując błędy cache'owania serwerów GitHuba
+          ./gradlew assembleDebug --no-daemon --stacktrace
