@@ -1,9 +1,13 @@
-plugins { id 'com.android.application' }
+plugins {
+    id 'com.android.application'
+}
+
 android {
-    namespace 'com.royaal.brawlpass'
+    namespace 'com.julek.brawlpass'
     compileSdk 33
+
     defaultConfig {
-        applicationId "com.royaal.brawlpass"
+        applicationId "com.julek.brawlpass"
         minSdk 24
         targetSdk 33
         versionCode 1
